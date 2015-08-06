@@ -1,0 +1,18 @@
+{% extends "biblioteca/base.html" %}
+{% block title %}Resultados{% endblock title %}
+{% block section_name %}Resultados de Busqueda{% endblock section_name %}
+{% block main %}
+	
+<p><strong>Estas buscando {{query}}, libros: {{libros}}</strong></p><br>
+{% if libros %}
+	<p>Libros Encontrados: {{libros|length}} libro {{libros|pluralize}}.</p>
+	<ul>
+		{% for libro in libros %}
+			<li>{{libro.titulo}}</li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<p>Ningun libro coincide con el criterio de búsqueda </p>
+{% endif %}
+<a href="{% url 'sitio:buscar' %}">Volver a intentar?</a>
+{% endblock main %}

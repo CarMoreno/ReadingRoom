@@ -1,0 +1,10 @@
+{% extends "biblioteca/base.html" %}
+{% block title %}Gracias{% endblock title %}
+{% block secion_name %}Gracias{% endblock secion_name %}
+{% block main %}
+	<p>Su mensaje es muy importante y nos ayuda a mejorar. El mensaje enviado fue</p>
+	<p><strong>ASUNTO</strong></p>{{asunto}}
+	<p><strong>MENSAJE</strong></p>{{mensaje}}
+	<p><strong>EMAIL</strong></p>{{email}}
+	<a href="{% url 'sitio:contactos'%}">Volver</a>
+{% endblock main %}

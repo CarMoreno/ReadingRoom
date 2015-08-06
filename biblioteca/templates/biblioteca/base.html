@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>{%block title%}{%endblock title%}</title>
+</head>
+<body>
+	<h1>Sitio Lectura</h1><br>
+	<h3>{% block section_name %}
+	{% endblock section_name %}</h3>
+	{# Menu principal #}
+	<ul><li><a href="{% url 'sitio:index' %}">Inicio</a></li></ul>
+	<ul><li><a href="{% url 'sitio:buscar' %}">Buscar Libro</a></li></ul>
+	<ul><li><a href="{% url 'sitio:crear' %}">Crear Libro</a></li></ul>
+	<ul><li><a href="{% url 'sitio:contactos' %}">Contáctanos</a></li></ul>
+	{# fin menu principal #}
+	{%block main%}
+	{%endblock main%}
+	<footer>Derechos reservados 2015</footer>
+</body>
+</html>

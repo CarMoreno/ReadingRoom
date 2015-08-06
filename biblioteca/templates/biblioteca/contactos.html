@@ -1,0 +1,15 @@
+{% extends "biblioteca/base.html" %}
+{% block title %}Contáctanos{% endblock title %}
+{% block section_name %}Contácta con nosotros{% endblock section_name %}
+{% block main %}
+	{% if form.errors %}
+		<p style="color:red">Por favor corrige lo siguiente</p>
+	{% endif %}
+	<form action="" method="POST">
+	{% csrf_token %}
+		<table>
+			{{form.as_table}}{# formulario como tabla #}
+		</table>
+		<input type="submit" value="Enviar">
+	</form>
+{% endblock main %}
