@@ -32,7 +32,7 @@ class Libro(models.Model):
 	autores = models.ManyToManyField(Autor) #Un libro, puede ser escrito por muchos autores, y un autor puede escribir muchos libros (Relacion muchos a muchos entre libro y autor)
 	editor = models.ForeignKey(Editor)	#Un editor puede distribuir muchos libros, pero un libro solo puede ser distribuido por un solo editor (Relacion uno a muchos entre libros y editor, tambien conocida como llave foranea)
 	fecha_publicacion = models.DateField()
-	portada = models.ImageField(upload_to = 'portadas')#Crea una carpeta donde guarara las imagenes de las portadas
+	portada = models.ImageField(upload_to = 'portadas/')#Crea una carpeta donde guarara las imagenes de las portadas, al final la imagen tendra que cargarse en: media/portadas/
 
 	def __unicode__(self):#__str__ para python 3
 		return self.titulo

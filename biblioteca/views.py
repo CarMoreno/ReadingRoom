@@ -9,6 +9,7 @@ def index(request):
 #_____________________________________________________________________________________________________
 def buscar(request):
 	errors = []
+
 	if 'query' in request.GET:
 		query = request.GET['query']#hasta aca puede que query sea una cadena vacia (que para python es como si fuere un False)
 		if not query:
@@ -17,7 +18,9 @@ def buscar(request):
 			errors.append('Por favor digita un criterio de busqueda menor a 20 caracteres')
 		else:
 			libros = Libro.objects.filter(titulo__icontains=query)#Icontains es un tipo de busqueda que no tiene en cuenta mayusculas o minusculas
-			return render(request, 'biblioteca/resultados.html', {'query':query, 'libros':libros})
+			libroas_obj = Libro.objects.get(titulo__icontains=query)#Obtengo el registro del libro como un objeto, arriba lo obtengo es como un arreglo de objetos
+			autores = libroas_obj.autores.all()#Obtengo los autores del libro asociado. Autor es un objeto tambien, por lo que puedo acceder a metodos como get(), all(), etc.
+			return render(request, 'biblioteca/resultados.html', {'query':query, 'libros':libros, 'autores':autores})#Con los objetos obtenidos simplemente los mando a la template
 	
 	return render(request, 'biblioteca/buscar.html', {'errors':errors})#Hubo un error??
 #____________________________________________________________________________________________________

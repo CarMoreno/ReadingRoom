@@ -2,20 +2,61 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<!-- jquery minificado -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+	<!--Iconos-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<title>{%block title%}{%endblock title%}</title>
 </head>
-<body>
-	<h1>Sitio Lectura</h1><br>
-	<h3>{% block section_name %}
-	{% endblock section_name %}</h3>
+<body style="display:flex; min-height:100vh; flex-direction:column;">
+<header>
 	{# Menu principal #}
-	<ul><li><a href="{% url 'sitio:index' %}">Inicio</a></li></ul>
-	<ul><li><a href="{% url 'sitio:buscar' %}">Buscar Libro</a></li></ul>
-	<ul><li><a href="{% url 'sitio:crear' %}">Crear Libro</a></li></ul>
-	<ul><li><a href="{% url 'sitio:contactos' %}">Contáctanos</a></li></ul>
+	<nav>
+		<div class="nav-wrapper">
+			<a href="{% url 'sitio:index' %}" class="brand-logo">Logo</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li class="activate"><a href="{% url 'sitio:index' %}"><i class="material-icons left">clear_all</i>Inicio</a></li>
+				<li><a href="{% url 'sitio:buscar' %}"><i class="material-icons left">search</i>Buscar Libro</a></li>
+				<li><a href="{% url 'sitio:crear' %}"><i class="material-icons left">add</i>Crear Libro</a></li>
+				<li><a href="{% url 'sitio:contactos' %}"><i class="material-icons left">perm_identity</i>Contáctanos</a></li>
+			</ul>
+		</div>
+	</nav>
 	{# fin menu principal #}
-	{%block main%}
-	{%endblock main%}
-	<footer>Derechos reservados 2015</footer>
+</header>
+<main style="flex: 1 0 auto;">
+	<div class="container">
+		<div class="divider"></div>
+			<div class="section">
+				<h4><i class="material-icons">turned_in</i>{% block section_name %}{% endblock section_name %}</h4>
+				<p>{% block section_description %}{% endblock section_description %}</p>
+			</div>
+		{%block main%}
+		{%endblock main%}
+	</div>
+	
+</main>	
+	{# footer inicio #}
+	<footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Sitio Lectura</h5>
+                <p class="grey-text text-lighten-4">Un sitio donde puedes buscar y compartir libros <i class="material-icons left">class</i></p>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2015 Copyright Todos los derechos reservados
+            </div>
+          </div>
+    </footer>
+    {#  footer fin #}
 </body>
 </html>

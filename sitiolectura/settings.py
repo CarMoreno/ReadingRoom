@@ -101,7 +101,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+STATIC_URL = '/static/'#Esta es la ruta que usa django para definir los estilos de su sitio de admon
 
-STATIC_URL = '/static/'
-
+#CONFIGURACION NECESARIA PARA ARCHIVOS ESTATICOS (CSS3,JS y IMAGENES).
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'media'),
+)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #Configuration para django-debugging-toolbar

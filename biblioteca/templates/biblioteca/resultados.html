@@ -1,18 +1,44 @@
 {% extends "biblioteca/base.html" %}
+{% load staticfiles %}
 {% block title %}Resultados{% endblock title %}
 {% block section_name %}Resultados de Busqueda{% endblock section_name %}
-{% block main %}
-	
-<p><strong>Estas buscando {{query}}, libros: {{libros}}</strong></p><br>
-{% if libros %}
-	<p>Libros Encontrados: {{libros|length}} libro {{libros|pluralize}}.</p>
-	<ul>
-		{% for libro in libros %}
-			<li>{{libro.titulo}}</li>
-		{% endfor %}
-	</ul>
-	{% else %}
-	<p>Ningun libro coincide con el criterio de búsqueda </p>
-{% endif %}
-<a href="{% url 'sitio:buscar' %}">Volver a intentar?</a>
-{% endblock main %}
+
+
+	{% block main %}
+
+		<div class="row">
+			<div class="col s12 l6 offset-l3">
+			  <div class="card blue-grey lighten-3">
+			    <div class="card-content">
+			      <span class="card-title black-text"><strong>Resultado de busqueda</strong></span>
+					{% if libros %}
+			      		<p>Estas buscando <strong>"{{query}}"</strong>...Se ha detectado {{libros|length}} libro {{libros|pluralize}}. </p>
+						<ul><br>
+							{% for libro in libros %}
+								<li><strong>Título: </strong>{{libro.titulo}}</li>
+								{% for autor in autores %}
+									<li><strong>Autores: </strong>{{autor.nombre}}</li>
+									{% empty %}
+									<li><strong>Autores: </strong><p>No hay autores registrados para este libro.</p></li>	
+								{% endfor %}
+								<li><strong>Fehca de Publicación: </strong>{{libro.fecha_publicacion}}</li>
+								<li><strong>Editor: </strong>{{libro.editor}}</li>
+								<li><strong>Root Image:</strong>{{libro.portada}}</li>
+								<div class="card-image">
+									<img src="{% static libro.portada %}" alt="portada">
+								</div>
+							{% endfor %}
+						</ul>
+						{% else %}
+						<p>Ningun libro coincide con el criterio de búsqueda </p>
+					{% endif %}
+					
+			    </div>
+			    <div class="card-action">
+			      <a href="{% url 'sitio:buscar' %}"><p class="blue-grey-text">Volver a intentar?</p></a>
+			    </div>
+			  </div>
+			</div>
+		</div>	
+	{% endblock main %}
+
