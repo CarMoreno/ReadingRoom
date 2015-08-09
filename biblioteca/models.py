@@ -21,7 +21,8 @@ class Autor(models.Model):
 	email = models.EmailField(blank=True, verbose_name='e-mail')#CAMPO EMAIL OPCIONAL, con el verbose_name persoalizamos el label que se muestra para el campo en el form
 
 	def __unicode__(self):#__str__ para python 3
-		return self.nombre
+		cadena = "%s %s" %(self.nombre, self.apellido)
+		return cadena
 
 	class Meta:
 		ordering = ["nombre"]#Por default, Siempre ordenara por nombre todos los registros

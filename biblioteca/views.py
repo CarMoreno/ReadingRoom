@@ -1,20 +1,31 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from biblioteca.models import Libro, Editor, Autor
-from biblioteca.forms import FormularioContacto, FormularioCrear
+from biblioteca.models import Libro, Editor, Autor#Importamos modelos
+from biblioteca.forms import FormularioContacto, FormularioCrear#Importamos los formularios creados con la api de forms
+from django.views.generic import ListView, DetailView #Listas genericas de Django
 # Create your views here.
-def index(request):
-	return render(request, "biblioteca/index.html")
+TAMANO_QUERY_BUSQUEDA = 100 
+class LibroListView(ListView):
+	"""Clase generica que mostrara en una lista todos los Libros guardados en la BD,
+	debemos de hacer un template con el nombre que django buscara por default, en este caso
+	es libro_list.html, sino definimos el nombre con el atributo template_name"""
+	model = Libro
+	template_name = 'biblioteca/index.html'
+
+# def index(request):
+# 	"""En el index se mostrara la lista de libros que tenemos en la base de datos"""
+# 	return render(request, "biblioteca/index.html")
 #_____________________________________________________________________________________________________
 def buscar(request):
+	"""Busca por nombre, libros en la base de datos"""
 	errors = []
 
 	if 'query' in request.GET:
 		query = request.GET['query']#hasta aca puede que query sea una cadena vacia (que para python es como si fuere un False)
 		if not query:
 			errors.append('Por favor digita un criterio de busqueda') #si entra aca es porque el query estaba vacio
-		elif len(query)>20:
+		elif len(query)>TAMANO_QUERY_BUSQUEDA:
 			errors.append('Por favor digita un criterio de busqueda menor a 20 caracteres')
 		else:
 			libros = Libro.objects.filter(titulo__icontains=query)#Icontains es un tipo de busqueda que no tiene en cuenta mayusculas o minusculas
@@ -46,6 +57,7 @@ def crear(request):
 	
 #_________________________________________________________________________________________________
 def contactos(request):
+	"""Crear y valida un formulario de contactos usando la api de formularios"""
 	errors = []
 	if request.method == 'POST':
 		form = FormularioContacto(request.POST)
@@ -66,4 +78,5 @@ def contactos(request):
 		
 #__________________________________________________________________________________________________
 def gracias(request):
+	"""Retorna una pagina de gracias despues de que el formulario de contactos ha sido enviado con exito"""
 	return render(request, 'biblioteca/gracias.html')			

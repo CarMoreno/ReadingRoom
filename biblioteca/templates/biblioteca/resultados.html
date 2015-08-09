@@ -5,7 +5,7 @@
 
 
 	{% block main %}
-
+		
 		<div class="row">
 			<div class="col s12 l6 offset-l3">
 			  <div class="card blue-grey lighten-3">
@@ -17,15 +17,14 @@
 							{% for libro in libros %}
 								<li><strong>Título: </strong>{{libro.titulo}}</li>
 								{% for autor in autores %}
-									<li><strong>Autores: </strong>{{autor.nombre}}</li>
+									<li><strong>Autores: </strong>{{autor.nombre}} {{autor.apellido}}</li>
 									{% empty %}
 									<li><strong>Autores: </strong><p>No hay autores registrados para este libro.</p></li>	
 								{% endfor %}
 								<li><strong>Fehca de Publicación: </strong>{{libro.fecha_publicacion}}</li>
 								<li><strong>Editor: </strong>{{libro.editor}}</li>
-								<li><strong>Root Image:</strong>{{libro.portada}}</li>
 								<div class="card-image">
-									<img src="{% static libro.portada %}" alt="portada">
+									<img src="{% static libro.portada %}" style="width:200px; height=200px " alt="portada">
 								</div>
 							{% endfor %}
 						</ul>
