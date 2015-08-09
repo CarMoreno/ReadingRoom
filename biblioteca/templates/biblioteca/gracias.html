@@ -1,10 +1,44 @@
 {% extends "biblioteca/base.html" %}
 {% block title %}Gracias{% endblock title %}
-{% block secion_name %}Gracias{% endblock secion_name %}
+{% block section_name %}Gracias{% endblock section_name %}
 {% block main %}
-	<p>Su mensaje es muy importante y nos ayuda a mejorar. El mensaje enviado fue</p>
-	<p><strong>ASUNTO</strong></p>{{asunto}}
-	<p><strong>MENSAJE</strong></p>{{mensaje}}
-	<p><strong>EMAIL</strong></p>{{email}}
-	<a href="{% url 'sitio:contactos'%}">Volver</a>
+<div class="row">
+	<div class="col s12 m6 l6 offset-l3">
+		<div class="card blue-grey lighten-3">
+			<div class="card-content black-text">
+				<span class="card-title black-text"><strong>Gracias</strong></span>
+				<p>Su mensaje es muy importante y nos ayuda a mejorar. El mensaje enviado fue:</p>
+				<ul>
+					<li><strong>Asunto: </strong>{{asunto}}</li>
+					<li><strong>Mensaje: </strong>{{mensaje}}</li>
+					<li><strong>Tu E-mail: </strong>{{email}}</li>
+				</ul>
+			</div>
+			<div class="card-action">
+				<a href="{% url 'sitio:contactos'%}"><span class="blue-grey-text">Volver</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+{# -----------------MODAL------------------- #}
+	<!-- Modal Structure -->
+<div class="row">		
+	<div id="modal1" class="modal">
+			<div class="modal-content">
+				<div class="card blue-grey lighten-3">
+		            <div class="card-content black-text">
+		              <span class="card-title black-text"><strong>¡ Éxito !</strong></span>
+		              <p>Su mensaje ha sido enviado satisfactoriamente</p>
+		            </div>
+		        </div>    
+			</div>
+		</div>
+	</div>	
+	{% if open_modal %}{# Si se envio via post entonces se ejecutará el modal #}
+		<script>
+		 $('#modal1').openModal();
+		</script>
+	{% endif %}
 {% endblock main %}

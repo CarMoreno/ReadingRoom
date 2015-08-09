@@ -29,9 +29,7 @@ def buscar(request):
 			errors.append('Por favor digita un criterio de busqueda menor a 20 caracteres')
 		else:
 			libros = Libro.objects.filter(titulo__icontains=query)#Icontains es un tipo de busqueda que no tiene en cuenta mayusculas o minusculas
-			libroas_obj = Libro.objects.get(titulo__icontains=query)#Obtengo el registro del libro como un objeto, arriba lo obtengo es como un arreglo de objetos
-			autores = libroas_obj.autores.all()#Obtengo los autores del libro asociado. Autor es un objeto tambien, por lo que puedo acceder a metodos como get(), all(), etc.
-			return render(request, 'biblioteca/resultados.html', {'query':query, 'libros':libros, 'autores':autores})#Con los objetos obtenidos simplemente los mando a la template
+			return render(request, 'biblioteca/resultados.html', {'query':query, 'libros':libros})#Con los objetos obtenidos simplemente los mando a la template
 	
 	return render(request, 'biblioteca/buscar.html', {'errors':errors})#Hubo un error??
 #____________________________________________________________________________________________________
@@ -69,8 +67,8 @@ def contactos(request):
 			# 	cd.get('email', 'norelpyexample.com'),
 			# 	['siteowner@example.com'],	
 			# )
-			return HttpResponseRedirect(reverse('sitio:gracias'))
-			# return render(request, 'biblioteca/gracias.html', {'asunto':cd['asunto']})
+			# return HttpResponseRedirect(reverse('sitio:con'))
+			return render(request, 'biblioteca/gracias.html', {'asunto':cd['asunto'], 'mensaje':cd['mensaje'], 'email':cd['email'], 'open_modal':True})
 	else:
 		form = FormularioContacto()
 	return render(request,'biblioteca/contactos.html', {'form':form})
