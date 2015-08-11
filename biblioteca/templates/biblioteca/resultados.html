@@ -16,7 +16,7 @@
 						<ul><br>
 							{% for libro in libros %}
 								<li><strong>Título: </strong>{{libro.titulo}}</li>
-								{% for autor in libros.autores.all %}
+								{% for autor in libro.autores.all %}
 									<li><strong>Autores: </strong>{{autor.nombre}} {{autor.apellido}}</li>
 									{% empty %}
 									<li><strong>Autores: </strong><p>No hay autores registrados para este libro.</p></li>	

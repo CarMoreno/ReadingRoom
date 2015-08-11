@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 class Editor(models.Model):
@@ -12,8 +13,12 @@ class Editor(models.Model):
 	def __unicode__(self):#__str__ para python 3
 		return self.nombre
 
+	def get_absolute_url(self):
+		return reverse('sitio:index')
+
 	class Meta:
 		verbose_name_plural = 'Editores'
+
 #____________________________________________________________			
 class Autor(models.Model):
 	nombre = models.CharField(max_length=30)
@@ -24,16 +29,23 @@ class Autor(models.Model):
 		cadena = "%s %s" %(self.nombre, self.apellido)
 		return cadena
 
+	def get_absolute_url(self):
+		return reverse('sitio:index')
+
 	class Meta:
 		ordering = ["nombre"]#Por default, Siempre ordenara por nombre todos los registros
 		verbose_name_plural='Autores'	
 
+
 class Libro(models.Model):
 	titulo = models.CharField(max_length=100)
-	autores = models.ManyToManyField(Autor) #Un libro, puede ser escrito por muchos autores, y un autor puede escribir muchos libros (Relacion muchos a muchos entre libro y autor)
-	editor = models.ForeignKey(Editor)	#Un editor puede distribuir muchos libros, pero un libro solo puede ser distribuido por un solo editor (Relacion uno a muchos entre libros y editor, tambien conocida como llave foranea)
-	fecha_publicacion = models.DateField()
+	autores = models.ManyToManyField(Autor, default=Autor.objects.filter(pk=1)) #Un libro, puede ser escrito por muchos autores, y un autor puede escribir muchos libros (Relacion muchos a muchos entre libro y autor)
+	editor = models.ForeignKey(Editor, default=Editor.objects.filter(pk=1))	#Un editor puede distribuir muchos libros, pero un libro solo puede ser distribuido por un solo editor (Relacion uno a muchos entre libros y editor, tambien conocida como llave foranea)
+	fecha_publicacion = models.DateField(help_text='Usa el formato YYYY/MMM/DD')
 	portada = models.ImageField(upload_to = 'portadas/')#Crea una carpeta donde guarara las imagenes de las portadas, al final la imagen tendra que cargarse en: media/portadas/
-
+	
+	def get_absolute_url(self):
+		return reverse('sitio:index')
+	
 	def __unicode__(self):#__str__ para python 3
 		return self.titulo

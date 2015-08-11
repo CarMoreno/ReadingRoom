@@ -2,17 +2,41 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from biblioteca.models import Libro, Editor, Autor#Importamos modelos
-from biblioteca.forms import FormularioContacto, FormularioCrear#Importamos los formularios creados con la api de forms
+from biblioteca.forms import FormContacto, FormCrearLibro#Importamos los formularios creados con la api de forms
 from django.views.generic import ListView, DetailView #Listas genericas de Django
+from django.views.generic.edit import CreateView, UpdateView#Listas genericas de Django
 # Create your views here.
 TAMANO_QUERY_BUSQUEDA = 100 
+
 class LibroListView(ListView):
-	"""Clase generica que mostrara en una lista todos los Libros guardados en la BD,
+	"""Clase-Vista generica que mostrara en una lista todos los Libros guardados en la BD,
 	debemos de hacer un template con el nombre que django buscara por default, en este caso
 	es libro_list.html, sino definimos el nombre con el atributo template_name"""
 	model = Libro
 	template_name = 'biblioteca/index.html'
 
+class LibroCreateView(CreateView):
+	model = Libro
+	form_class = FormCrearLibro #Caracteristicas especiales para este formulario
+	template_name = 'biblioteca/uc_libro.html'
+
+	def get_context_data(self, **kwargs):
+		"""Para poder mandar contextos extras a las vistas"""
+		# Call the base implementation first to get a context
+		context = super(CreateView, self).get_context_data(**kwargs)
+		context["now_create"] = True
+		return context
+
+class LibroUpdateView(UpdateView):
+	"""Clase-Vista generica que mostrara los datos de un libro para que este sea editado"""
+	model = Libro
+	form_class = FormCrearLibro
+	template_name = 'biblioteca/uc_libro.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(UpdateView, self).get_context_data(**kwargs)
+		context['now_update'] = True
+		return context
 # def index(request):
 # 	"""En el index se mostrara la lista de libros que tenemos en la base de datos"""
 # 	return render(request, "biblioteca/index.html")
@@ -33,32 +57,14 @@ def buscar(request):
 	
 	return render(request, 'biblioteca/buscar.html', {'errors':errors})#Hubo un error??
 #____________________________________________________________________________________________________
-
-def crear(request):
-	return render(request, 'biblioteca/crear.html', {'respuesta':'En proceso'})
-	# errors = []
-	# autor = Autor()
-	# editor = Editor()
-	# if request.method == 'POST':
-	# 	form = FormularioCrear(request.POST)
-	# 	if form.is_valid():
-	# 		cd = form.cleaned_data
-	# 		# Autor.nombre = cd['autor']#Nombre del autor
-	# 		# Editor.nombre = cd['editor']#Nombre del editor
-	# 		Libro.objects.create(titulo=cd['titulo'], autores = Autor(), editor = Editor(), fecha_publicacion = cd['fecha_publicacion'], portada=cd['portada'])
-	# 		return render(request, 'biblioteca/crear.html', {'respuesta':'OK'})
-
-	# else:
-	# 	form = FormularioCrear()		
-	# return render(request, 'biblioteca/crear.html', {'form':form})		
-
+	
 	
 #_________________________________________________________________________________________________
 def contactos(request):
 	"""Crear y valida un formulario de contactos usando la api de formularios"""
 	errors = []
 	if request.method == 'POST':
-		form = FormularioContacto(request.POST)
+		form = FormContacto(request.POST)
 		if form.is_valid():
 			cd = form.cleaned_data #Esta linea es muy importante: {'mensaje': u'Buen sitio!', 'email': u'adrian@example.com', 'asunto': u'Hola'}, me pasa de codig html a codigo python todos los campos del formulario
 			# send_email(
@@ -70,7 +76,7 @@ def contactos(request):
 			# return HttpResponseRedirect(reverse('sitio:con'))
 			return render(request, 'biblioteca/gracias.html', {'asunto':cd['asunto'], 'mensaje':cd['mensaje'], 'email':cd['email'], 'open_modal':True})
 	else:
-		form = FormularioContacto()
+		form = FormContacto()
 	return render(request,'biblioteca/contactos.html', {'form':form})
 
 		

@@ -11,7 +11,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 	<!--Iconos-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<title>{%block title%}{%endblock title%}</title>
+	<title>{%block title%}{%endblock title%}
+	{% block update %}{% endblock update %}
+	{% block create %}{% endblock create %}</title>
 </head>
 <body style="display:flex; min-height:100vh; flex-direction:column;">
 <header>
@@ -33,11 +35,12 @@
 	<div class="container">
 		<div class="divider"></div>
 			<div class="section">
-				<h4><i class="material-icons left">turned_in</i>{% block section_name %}{% endblock section_name %}</h4>
+				<h4><i class="material-icons left">turned_in</i>{% block section_name %}{% endblock section_name %} {% block section_create %}{% endblock section_create %} {% block section_update %}{% endblock section_update %} </h4>
 				<p>{% block section_description %}{% endblock section_description %}</p>
 			</div>
-		{%block main%}
-		{%endblock main%}
+	{%block main%}
+	
+	{%endblock main%}
 	</div>
 	
 </main>	
