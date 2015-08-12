@@ -1,33 +1,33 @@
 {% extends "biblioteca/base.html" %}
 {% load staticfiles %}
 {% block title %}Inicio{% endblock title %}
+{% block icon %}library_books{% endblock icon %}
 {% block section_name %}Inicio{% endblock section_name %}
 {% block section_description %}Mira el catálogo de libros disponibles{% endblock section_description %}
 {% block main %}
 	<div class="row">
-	{# {{object_list}} #}
-	{% for libro in object_list  %}{# object_list es el nombre que django da por default a la lista donde estan los objetos (en este caso libros) #}
+	{# {{lista_libros}} #}
+	{% for libro in lista_libros  %}{# object_list es el nombre que django da por default a la lista donde estan los objetos (en este caso libros) #}
 			{# los libros de la bd se muestran en una tarjeta de imagen #}
         <div class="col s12 m4">
           <div class="card blue-grey lighten-3">
             <div class="card-image">
               <img src="{% static libro.portada %}" width="100px" height="200px">
-              <span class="card-title" style="color:#546e7a;"><strong>{{libro.titulo}}</strong></span>
             </div>
             <div class="card-content">
               <ul>
               	{% for autor in libro.autores.all %}
               		
-              	<li><strong>Autor(es): </strong>{{autor.nombre}} {{autor.apellido}}</li>
-              	{% endfor %}
-              	<li><strong>Editor: </strong>{{libro.editor}}</li>
-              	<li><strong>Fecha de publicación: </strong>{{libro.fecha_publicacion}}</li>
-              	<li></li>
+              	<li><strong>Título:</strong>{{libro.titulo}}</li>
+                <li><strong>Autor(es): </strong>{{autor.nombre}} {{autor.apellido}}</li>
+                {% endfor %}
+                <li><strong>Editor: </strong>{{libro.editor}}</li>
+                <li><strong>Fecha de publicación: </strong>{{libro.fecha_publicacion}}</li>
               </ul>
             </div>
             <div class="card-action">
               <a href="{% url 'sitio:update' libro.pk %}"><span class="blue-grey-text">Editar libro</span></a>
-              <a href="#"><span class="blue-grey-text">Ver Detalles</span></a>
+              <a href="{% url 'sitio:detail' libro.pk %}"><span class="blue-grey-text">Ver Detalles</span></a>
             </div>
           </div>
         </div>

@@ -14,6 +14,7 @@ class LibroListView(ListView):
 	es libro_list.html, sino definimos el nombre con el atributo template_name"""
 	model = Libro
 	template_name = 'biblioteca/index.html'
+	context_object_name = "lista_libros" #El contexto que usaremos en la template
 
 class LibroCreateView(CreateView):
 	model = Libro
@@ -33,10 +34,10 @@ class LibroUpdateView(UpdateView):
 	form_class = FormCrearLibro
 	template_name = 'biblioteca/uc_libro.html'
 
-	def get_context_data(self, **kwargs):
-		context = super(UpdateView, self).get_context_data(**kwargs)
-		context['now_update'] = True
-		return context
+class LibroDetailView(DetailView):
+	"""Clase-Vista generica que mostrara los detalles de un libro para que podamos conocerlo mejor :)"""
+	model = Libro
+	template_name = 'biblioteca/detalles_libro.html'	
 # def index(request):
 # 	"""En el index se mostrara la lista de libros que tenemos en la base de datos"""
 # 	return render(request, "biblioteca/index.html")
@@ -50,7 +51,7 @@ def buscar(request):
 		if not query:
 			errors.append('Por favor digita un criterio de busqueda') #si entra aca es porque el query estaba vacio
 		elif len(query)>TAMANO_QUERY_BUSQUEDA:
-			errors.append('Por favor digita un criterio de busqueda menor a 20 caracteres')
+			errors.append('Por favor digita un criterio de busqueda menor a 100 caracteres')
 		else:
 			libros = Libro.objects.filter(titulo__icontains=query)#Icontains es un tipo de busqueda que no tiene en cuenta mayusculas o minusculas
 			return render(request, 'biblioteca/resultados.html', {'query':query, 'libros':libros})#Con los objetos obtenidos simplemente los mando a la template

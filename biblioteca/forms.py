@@ -28,5 +28,5 @@ class FormCrearEditor(forms.ModelForm):
 class FormCrearLibro(forms.ModelForm):
     class Meta:
         model = Libro
-    	fields = ['titulo', 'autores', 'editor', 'fecha_publicacion', 'portada']
+    	fields = ['titulo', 'autores', 'editor', 'fecha_publicacion', 'portada', 'sinopsis']
     	

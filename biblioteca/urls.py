@@ -11,7 +11,9 @@ urlpatterns = [
 	#Agradecimiento
 	url(r'^contactos/gracias$', views.gracias, name='gracias'),
 	#Subir libros
-	url(r'^crearlibro$', views.LibroCreateView.as_view(), name='crear'),
+	url(r'^crear-libro$', views.LibroCreateView.as_view(), name='crear'),
 	#Update Libros
-	url(r'^(?P<pk>\d+)/updatelibro$', views.LibroUpdateView.as_view(), name='update'),
+	url(r'^(?P<pk>\d+)/update-libro$', views.LibroUpdateView.as_view(), name='update'),
+	#Detail Libros
+	url(r'^(?P<pk>\d+)/detalles-libro$', views.LibroDetailView.as_view(), name='detail'),
 ]
