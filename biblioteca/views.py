@@ -38,9 +38,6 @@ class LibroDetailView(DetailView):
 	"""Clase-Vista generica que mostrara los detalles de un libro para que podamos conocerlo mejor :)"""
 	model = Libro
 	template_name = 'biblioteca/detalles_libro.html'	
-# def index(request):
-# 	"""En el index se mostrara la lista de libros que tenemos en la base de datos"""
-# 	return render(request, "biblioteca/index.html")
 #_____________________________________________________________________________________________________
 def buscar(request):
 	"""Busca por nombre, libros en la base de datos"""
@@ -79,7 +76,6 @@ def contactos(request):
 	else:
 		form = FormContacto()
 	return render(request,'biblioteca/contactos.html', {'form':form})
-
 		
 #__________________________________________________________________________________________________
 def gracias(request):
