@@ -5,6 +5,7 @@ from biblioteca.models import Libro, Editor, Autor#Importamos modelos
 from biblioteca.forms import FormContacto, FormCrearLibro#Importamos los formularios creados con la api de forms
 from django.views.generic import ListView, DetailView #Listas genericas de Django
 from django.views.generic.edit import CreateView, UpdateView#Listas genericas de Django
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 TAMANO_QUERY_BUSQUEDA = 100 
 
@@ -13,7 +14,7 @@ class LibroListView(ListView):
 	debemos de hacer un template con el nombre que django buscara por default, en este caso
 	es libro_list.html, sino definimos el nombre con el atributo template_name"""
 	model = Libro
-	template_name = 'biblioteca/index.html'
+	template_name = 'biblioteca/catalogo.html'
 	context_object_name = "lista_libros" #El contexto que usaremos en la template
 
 class LibroCreateView(CreateView):
@@ -80,4 +81,6 @@ def contactos(request):
 #__________________________________________________________________________________________________
 def gracias(request):
 	"""Retorna una pagina de gracias despues de que el formulario de contactos ha sido enviado con exito"""
-	return render(request, 'biblioteca/gracias.html')			
+	return render(request, 'biblioteca/gracias.html')
+#____________________________________________________________________________________________________
+    

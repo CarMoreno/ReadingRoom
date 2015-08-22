@@ -1,19 +1,16 @@
 from django import forms
 from django.forms import ModelForm
+# from django.contrib.auth.forms import UserCreationForm
 from biblioteca.models import Libro, Autor, Editor
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+
 
 class FormContacto(forms.Form):
     # TODO: Define form fields here
     asunto = forms.CharField(max_length=100)
     email = forms.EmailField(required=False, label='E-mail (opcional)')#El campo email no es requerido
-    mensaje = forms.CharField(widget=forms.Textarea)
-
-# class FormCrearLibro(forms.Form):
-# 	titulo = forms.CharField(max_length=100)
-# 	autor = forms.ModelMultipleChoiceField(label='Autor(es)', queryset= Autor.objects.all())#M2M
-# 	editor = forms.ModelChoiceField(queryset = Editor.objects.all())#PK
-# 	fecha_publicacion = forms.DateField(required=False, label='Fecha de Publiciacion(Opcional)')
-# 	portada = forms.ImageField(required=False)    
+    mensaje = forms.CharField(widget=forms.Textarea)    
     
 class FormCrearAutor(forms.ModelForm):
     class Meta:
@@ -29,4 +26,4 @@ class FormCrearLibro(forms.ModelForm):
     class Meta:
         model = Libro
     	fields = ['titulo', 'autores', 'editor', 'fecha_publicacion', 'portada', 'sinopsis']
-    	
+    	                   

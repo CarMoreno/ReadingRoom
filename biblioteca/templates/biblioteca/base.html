@@ -21,9 +21,16 @@
 	{# Menu principal #}
 	<nav>
 		<div class="nav-wrapper">
-			<a href="{% url 'sitio:index' %}" class="brand-logo">Logo</a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li class="activate"><a href="{% url 'sitio:index' %}"><i class="material-icons left">library_books</i>Inicio</a></li>
+			<a href="{% url 'sitio:catalogo' %}" class="brand-logo">Bienvenido<i class="material-icons right blue-grey-text ">library_books</i></a>
+			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+	        <ul class="right hide-on-med-and-down">
+		        <li class="activate"><a href="{% url 'sitio:catalogo' %}"><i class="material-icons left">library_books</i>Inicio</a></li>
+				<li><a href="{% url 'sitio:buscar' %}"><i class="material-icons left">search</i>Buscar Libros</a></li>
+				<li><a href="{% url 'sitio:crear' %}"><i class="material-icons left">library_add</i>Crear Libro</a></li>
+				<li><a href="{% url 'sitio:contactos' %}"><i class="material-icons left">perm_identity</i>Contáctanos</a></li>
+	        </ul>
+			<ul id="mobile-demo" class="side-nav">
+				<li class="activate"><a href="{% url 'sitio:catalogo' %}"><i class="material-icons left">library_books</i>Inicio</a></li>
 				<li><a href="{% url 'sitio:buscar' %}"><i class="material-icons left">search</i>Buscar Libros</a></li>
 				<li><a href="{% url 'sitio:crear' %}"><i class="material-icons left">library_add</i>Crear Libro</a></li>
 				<li><a href="{% url 'sitio:contactos' %}"><i class="material-icons left">perm_identity</i>Contáctanos</a></li>
@@ -63,12 +70,11 @@
     </footer>
     {#  footer fin #}
 <!-- Configuracion e inicializaciones Javascript -->
-<!-- <script>
+<script>
+		//Menu desplegable
 	  $(document).ready(function(){
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-     $('#modal1').openModal();
-  });
-</script> -->    
+    	$('.button-collapse').sideNav();
+      });
+</script>    
 </body>
 </html>
