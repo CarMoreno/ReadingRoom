@@ -14,7 +14,7 @@ class Editor(models.Model):
 		return self.nombre
 
 	def get_absolute_url(self):
-		return reverse('sitio:catalogo')
+		return reverse('sitio:index')
 
 	class Meta:
 		verbose_name_plural = 'Editores'
@@ -30,7 +30,7 @@ class Autor(models.Model):
 		return cadena
 
 	def get_absolute_url(self):
-		return reverse('sitio:catalogo')
+		return reverse('sitio:index')
 
 	class Meta:
 		ordering = ["nombre"]#Por default, Siempre ordenara por nombre todos los registros
@@ -46,7 +46,7 @@ class Libro(models.Model):
 	sinopsis = models.TextField(blank=True)
 
 	def get_absolute_url(self):
-		return reverse('sitio:catalogo')
+		return reverse('sitio:index')
 	
 	def __unicode__(self):#__str__ para python 3
 		return self.titulo
