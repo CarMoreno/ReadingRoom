@@ -1,0 +1,64 @@
+{% extends "biblioteca/base.html" %}
+{% block title %}Sitio Lecutra{% endblock title %}
+{% block section_name %}¡ Vamos a hacerlo !{% endblock section_name %}
+{% block icon %}done_all{% endblock icon %}	
+{% block main %}
+
+	{% if form.is_valid %}
+		<p>HOLAAA</p>
+		 {# $('#modal1').openModal(); #}
+	{% endif %}
+
+{# -----------------MODAL------------------- #}
+	<!-- Modal Structure -->
+<div class="row">		
+	<div id="modal1" class="modal">
+			<div class="modal-content">
+				<div class="card blue-grey lighten-3">
+		            <div class="card-content black-text">
+		              <span class="card-title black-text"><strong>¡ Éxito !</strong></span>
+		              <p>Su mensaje ha sido enviado satisfactoriamente</p>
+		            </div>
+		        </div>    
+			</div>
+	</div>
+</div>
+	
+<div class="row">
+	<div class=" col  s12 m8 offset-m6 l6 offset-l3">
+		<div class="card  blue-grey lighten-3">
+			<div class="card-content">
+					{% if now_create %}{# si vamos a crear un libro entonces en el contexto vendra la variable now_create seteada en true, lo que haremos sera cambiar la forma en que se muestra los encabezados del formulario, para que concuerde con la accion a realizar #}
+						<span class="card-title black-text">
+							<strong>Crea un libro en la plataforma</strong>
+						</span>
+						<p>Siempre puedes crear un libro, es bueno compartir.</p>
+						{% else %}{# Sino esta seteada now_create quiere decir que lo que vamos a hacer es a editar un libro ya existente #}
+						<span class="card-title black-text">
+							<strong>Edita un libro</strong>
+						</span>
+						<p>¿Te equivocaste al subir el libro?, ¡ edítalo !</p>	
+					{% endif %}
+				<form action="" enctype="multipart/form-data" method="POST">
+					{% csrf_token %}
+					<table>
+						{{form.as_table}}	
+					</table>
+					<div class="card-action">
+						<button class="btn waves-effect waves-light  blue-grey" type="submit" name="crear" value="crear">Enviar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>		
+	<script>
+		// Para el correcto funcionamiento de los desplegables presentes en el formulario select
+		// se debe de incluir este script
+		$(document).ready(function() {
+	    $('select').material_select();
+	  });
+	</script>
+{%endblock main%}	
+</body>
+</html>	

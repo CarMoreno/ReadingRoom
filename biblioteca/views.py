@@ -14,7 +14,7 @@ class LibroListView(ListView):
 	debemos de hacer un template con el nombre que django buscara por default, en este caso
 	es libro_list.html, sino definimos el nombre con el atributo template_name"""
 	model = Libro
-	template_name = 'biblioteca/catalogo.html'
+	template_name = 'biblioteca/index.html'
 	context_object_name = "lista_libros" #El contexto que usaremos en la template
 
 class LibroCreateView(CreateView):

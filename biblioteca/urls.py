@@ -3,7 +3,7 @@ from . import views #De este directorio importe views
 
 urlpatterns = [
 	#Index
-	url(r'^catalogo$', views.LibroListView.as_view(), name='catalogo'),
+	url(r'^$', views.LibroListView.as_view(), name='index'),
 	#Formulario de contactos
 	url(r'^contactos/$', views.contactos, name='contactos'),
 	#Buscador
