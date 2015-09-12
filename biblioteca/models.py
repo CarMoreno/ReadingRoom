@@ -64,3 +64,4 @@ class Libro(models.Model):
 def libro_delete(sender, instance, **keywargs):
 	"""Borra los ficheros de las fotos que se eleminan"""
 	instance.portada.delete(False)
+
