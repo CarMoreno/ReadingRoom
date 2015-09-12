@@ -1,5 +1,7 @@
 from django.db import models
+from django.db.models.signals import post_delete#Seniales
 from django.core.urlresolvers import reverse
+from django.dispatch import receiver
 
 # Create your models here.
 class Editor(models.Model):
@@ -14,7 +16,7 @@ class Editor(models.Model):
 		return self.nombre
 
 	def get_absolute_url(self):
-		return reverse('sitio:catalogo')
+		return reverse('sitio:index')
 
 	class Meta:
 		verbose_name_plural = 'Editores'
@@ -30,23 +32,35 @@ class Autor(models.Model):
 		return cadena
 
 	def get_absolute_url(self):
-		return reverse('sitio:catalogo')
+		return reverse('sitio:index')
 
 	class Meta:
 		ordering = ["nombre"]#Por default, Siempre ordenara por nombre todos los registros
 		verbose_name_plural='Autores'	
 
+#____________________________________________________________	
+#Funcion que permite setear el valor por default para el argumento M2M Autor
+def defaultM2M():
+	return [Autor.objects.first().pk]
 
 class Libro(models.Model):
 	titulo = models.CharField(max_length=100)
-	autores = models.ManyToManyField(Autor, default=Autor.objects.filter(pk=1)) # Un libro, puede ser escrito por muchos autores, y un autor puede escribir muchos libros (Relacion muchos a muchos entre libro y autor)
+	autores = models.ManyToManyField(Autor) # Un libro, puede ser escrito por muchos autores, y un autor puede escribir muchos libros (Relacion muchos a muchos entre libro y autor)
 	editor = models.ForeignKey(Editor, default=Editor.objects.filter(pk=1))	#Un editor puede distribuir muchos libros, pero un libro solo puede ser distribuido por un solo editor (Relacion uno a muchos entre libros y editor, tambien conocida como llave foranea)
 	fecha_publicacion = models.DateField(help_text='Usa el formato DD/MMM/YYYY')
 	portada = models.ImageField(upload_to = 'portadas/', null=True, blank=True)#Crea una carpeta donde guarara las imagenes de las portadas, al final la imagen tendra que cargarse en: media/portadas/
 	sinopsis = models.TextField(blank=True)
 
 	def get_absolute_url(self):
-		return reverse('sitio:catalogo')
+		return reverse('sitio:index')
 	
 	def __unicode__(self):#__str__ para python 3
 		return self.titulo
+		
+
+#funcion que permite eliminar de forma correcta (eliminar el fichero) la imagen asociada a la ruta de 
+#un Libro
+@receiver(post_delete, sender=Libro)
+def libro_delete(sender, instance, **keywargs):
+	"""Borra los ficheros de las fotos que se eleminan"""
+	instance.portada.delete(False)

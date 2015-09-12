@@ -1,10 +1,10 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from biblioteca.models import Libro, Editor, Autor#Importamos modelos
 from biblioteca.forms import FormContacto, FormCrearLibro#Importamos los formularios creados con la api de forms
 from django.views.generic import ListView, DetailView #Listas genericas de Django
-from django.views.generic.edit import CreateView, UpdateView#Listas genericas de Django
+from django.views.generic.edit import CreateView, UpdateView, DeleteView#Listas genericas de Django
 from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 TAMANO_QUERY_BUSQUEDA = 100 
@@ -39,6 +39,10 @@ class LibroDetailView(DetailView):
 	"""Clase-Vista generica que mostrara los detalles de un libro para que podamos conocerlo mejor :)"""
 	model = Libro
 	template_name = 'biblioteca/detalles_libro.html'	
+
+class LibroDeleteView(DeleteView):
+	model = Libro
+	success_url = reverse_lazy('sitio:index')#Hacia donde me redirige despues de eliminar un libro
 #_____________________________________________________________________________________________________
 def buscar(request):
 	"""Busca por nombre, libros en la base de datos"""
@@ -56,7 +60,7 @@ def buscar(request):
 	
 	return render(request, 'biblioteca/buscar.html', {'errors':errors})#Hubo un error??
 #____________________________________________________________________________________________________
-	
+
 	
 #_________________________________________________________________________________________________
 def contactos(request):

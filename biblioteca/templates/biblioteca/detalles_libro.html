@@ -14,7 +14,8 @@
 	        <div class="card-content blue-grey lighten-5">
 	          <span class="card-title" style="color:#546e7a;"><strong>{{libro.titulo}}</strong></span>
 	        </div>  
-	    </div>    
+	    </div>
+
 	</div>
 	<div class="col s12 l8 m7">
 		<table class="hoverable">
@@ -41,6 +42,7 @@
 				<p>{{libro.sinopsis}}</p>	
 			</div>
 		</div>
+			<a href="{% url 'sitio:delete' libro.pk %}" class="btn-floating waves-effect waves-light tooltipped red" data-tooltip="Eliminar Libro (en proceso...)"data-position="right" name="delete_book"><i class="material-icons">delete</i></a>
 	</div>
 </div>
 {%endblock main%}
